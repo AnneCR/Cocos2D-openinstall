@@ -1,8 +1,16 @@
+有这么一个场景，甲给乙分享了链接，乙使用并下载APP，推荐者甲和乙的关系这个思路是怎样的？
+
+你首先想到的也许会说，那当然就是给对方一个邀请码去辨识啊。
+扫码下载，二维码里面有甲的推荐邀请号,APP下载包在本服务器上下载，通过地址也是可以知道甲的邀请信息，在APP下载输入甲的邀请码 。没错，这个是可以实现的，但是太传统，用户转化率严重低下， 最近在使用一个叫openinstall的SDK，openisntall就可以解决这个场景，通过它实现免填邀请码的功能，集成到Cocos2d-x游戏开发中。对App安装流程的优化，尤其是免填写邀请码安装，App推广的有奖邀请活动更大程度的达到推广爆炸式的效果。
+
+在分享链接自定义各种动态参数（如推广渠道号，邀请码，游戏房间号，用户id等等）。通过在分享链接url中附带app邀请人的用户id，就可达到免填邀请码的效果;或者app通过在url中附带游戏房间号实现直达游戏房间也可建立上下级关系；Cocos2d-x开发中免不了邀请用户获得奖励；新老用户直达游戏场景；从各种浏览器一键拉起游戏场景等等；那么如何在unity集成openinstall呢？
+
 1.注册/登录openinstall开发者平台http://developer.openinstall.io/并创建应用
 
 2.下载导入SDK
 
-3.新建自定义Application类 APP继承Application并初始化App启动时，调用OpenInstall.init(context)方法完成sdk初始化
+3.新建自定义Application类 APP继承Application并初始化App启动时，调用`OpenInstall.init(context)`方法完成sdk初始化
+``` java
 public class APP extends Application {
 
     @Override
@@ -81,24 +89,32 @@ public class AppActivity extends Cocos2dxActivity {
         }
     }
 }
+```
 
 5.配置AndroidManifest.xml
 
 在AndroidManifest.xml中添加权限声明
-
+``` java
 <uses-permission android:name="android.permission.INTERNET"/>
 <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+```
 
 在AndroidManifest.xml的application标签内设置AppKey
 
+``` java
 <meta-data android:name="com.openinstall.APP_KEY" android:value="openinstall平台生成的APP_KEY"/>
+```
 
-在AndroidManifest.xml中的application标签中添加 android:name=".APP"指定自定义的Application类，以便程序启动的时候初始化自定义Application类，而不是系统默认的Application类
 
+在AndroidManifest.xml中的application标签中添加 `android:name=".APP"` 指定自定义的Application类，以便程序启动的时候初始化自定义Application类，而不是系统默认的Application类
+
+``` java
 <activity
 android:name="org.cocos2dx.cpp.AppActivity"
  android:screenOrientation="landscape"
   android:configChanges="orientation|keyboardHidden|screenSize"
    android:label="@string/app_name"
    android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
+ ```
 
+最后打安装包上传到openinstall后台测试完毕。
