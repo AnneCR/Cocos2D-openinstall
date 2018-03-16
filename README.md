@@ -101,3 +101,4 @@ android:name="org.cocos2dx.cpp.AppActivity"
   android:configChanges="orientation|keyboardHidden|screenSize"
    android:label="@string/app_name"
    android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
+
