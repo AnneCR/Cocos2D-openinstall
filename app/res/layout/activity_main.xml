@@ -5,9 +5,23 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <TextView
+ <!--   <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="cocos 游戏android studio"/>
+        android:text="cocos 游戏android studio"/>-->
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="getInstall"
+        android:id="@+id/install"
+        />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="reportEffectPoint"
+        android:id="@+id/effectPoint"
+        />
 
     </LinearLayout>

@@ -27,6 +27,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.fm.openinstall.OpenInstall;
@@ -40,16 +42,34 @@ import org.cocos2dx.lib.Cocos2dxActivity;
 
 public class AppActivity extends Cocos2dxActivity {
 
+     Button effercPoint;
+     Button install;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-       // 在唤醒页面中如下调用相关代码，获取web端传过来的自定义参数
-        OpenInstall.getWakeUp(getIntent(), wakeUpAdapter);
 
-       // 在APP需要个性化安装参数时（由web网页中传递过来的，如邀请码、游戏房间号等自定义参数），
-        // 调用OpenInstall.getInstall方法，在回调中获取参数（可重复获取）
-        getInstall();
+
+        effercPoint= (Button)findViewById(R.id.effectPoint);
+        install = (Button) findViewById(R.id.install);
+        effercPoint.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                reportEffectPoint("effect_test",100);
+            }
+        });
+
+        install.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getInstall();
+            }
+        });
+
+
+        // 在唤醒页面中如下调用相关代码，获取web端传过来的自定义参数
+        OpenInstall.getWakeUp(getIntent(), wakeUpAdapter);
     }
 
     @Override
@@ -78,6 +98,9 @@ public class AppActivity extends Cocos2dxActivity {
     }
 
 
+    /**
+     * 安装来源追踪（无码邀请，加入游戏房间，）
+     */
     public void getInstall(){
         //获取OpenInstall数据
         final SharedPreferences sp = getSharedPreferences("cocosdemo", MODE_PRIVATE);
@@ -105,6 +128,16 @@ public class AppActivity extends Cocos2dxActivity {
                 }
             });
         }
+    }
+
+    /**
+     * 上报效果点统计
+     * @param effectId
+     * @param effectValue
+     */
+    public  void reportEffectPoint(String effectId,long effectValue){
+        OpenInstall.reportEffectPoint(effectId,effectValue);
+        Toast.makeText(AppActivity.getContext(),"上报成功，可能延迟几秒",Toast.LENGTH_SHORT).show();
     }
 
 }
